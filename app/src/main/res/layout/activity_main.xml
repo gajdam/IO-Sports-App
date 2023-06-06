@@ -25,13 +25,15 @@
             android:padding="16dp">
 
             <Button
+                android:id="@+id/addEvent_btn"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/round_btn"
+                android:gravity="center"
+                android:onClick="addBtn_click"
                 android:text="+"
-                android:textSize="24sp"
                 android:textColor="#FFFFFF"
-                android:gravity="center" />
+                android:textSize="24sp" />
         </LinearLayout>
 
     </FrameLayout>

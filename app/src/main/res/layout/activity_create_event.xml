@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Pole wyboru lokalizacji -->
+    <Button
+        android:id="@+id/btnLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnLocation_click"
+        android:text="Choose Location" />
+
+    <!-- Pole wprowadzania daty -->
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Data" />
+
+    <!-- Pole wprowadzania godziny -->
+    <EditText
+        android:id="@+id/etTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Godzina" />
+
+    <!-- Pole wprowadzania ilości uczestników -->
+    <EditText
+        android:id="@+id/etParticipants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ilość uczestników" />
+
+    <!-- Pole wprowadzania nazwy sportu -->
+    <EditText
+        android:id="@+id/etSportName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nazwa sportu" />
+
+    <!-- Pole wyboru czy jest płatne -->
+    <CheckBox
+        android:id="@+id/cbPaid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Paid" />
+
+    <!-- Pole wprowadzania kwoty -->
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kwota"
+        android:inputType="numberDecimal"
+        android:visibility="gone" />
+
+    <!-- Guzik potwierdzający utworzenie -->
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnCreate_click"
+        android:text="Create" />
+
+</LinearLayout>
