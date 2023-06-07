@@ -13,39 +13,44 @@
         android:text="Choose Location" />
 
     <!-- Pole wprowadzania daty -->
+
+    <TextView
+        android:id="@+id/Hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paste the pin location"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/etLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location" />
+
     <EditText
         android:id="@+id/etDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Data" />
+        android:hint="Date" />
 
     <!-- Pole wprowadzania godziny -->
     <EditText
         android:id="@+id/etTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Godzina" />
+        android:hint="Hour" />
 
     <!-- Pole wprowadzania ilości uczestników -->
-    <EditText
-        android:id="@+id/etParticipants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ilość uczestników" />
 
     <!-- Pole wprowadzania nazwy sportu -->
     <EditText
         android:id="@+id/etSportName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nazwa sportu" />
+        android:hint="Sport" />
 
     <!-- Pole wyboru czy jest płatne -->
-    <CheckBox
-        android:id="@+id/cbPaid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Paid" />
 
     <!-- Pole wprowadzania kwoty -->
     <EditText
@@ -61,7 +66,7 @@
         android:id="@+id/btnCreate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="btnCreate_click"
-        android:text="Create" />
+        android:onClick="btnSend_click"
+        android:text="Send SMS" />
 
 </LinearLayout>

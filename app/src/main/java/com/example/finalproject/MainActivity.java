@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS}, 100);    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
