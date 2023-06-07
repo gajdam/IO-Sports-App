@@ -7,10 +7,13 @@ import android.app.Activity;
 import android.app.PendingIntent;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.telephony.SmsManager;
@@ -47,9 +50,26 @@ public class CreateEventActivity extends AppCompatActivity{
         String number = "9876543210";
         String message = "Hi, I want to invite you to play " + sportSt + " with me, on " + dateSt + " at " + hourSt + ". Meet me at: " + locationSt;
         ArrayList<String> parts = smsManager.divideMessage(message);
+        String phoneNumbers = "";
 
-        smsManager.sendMultipartTextMessage(number, null, parts, null, null);
-        Toast.makeText(this, "SMS sent", Toast.LENGTH_SHORT).show();
+        SQLiteDatabase myDB = openOrCreateDatabase("my.db", MODE_PRIVATE, null);
+        myDB.execSQL(
+                "CREATE TABLE IF NOT EXISTS userBase (phoneNumber VARCHAR(200), sport VARCHAR(200), city VARCHAR(200))"
+        );
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        String preferredCity = sharedPreferences.getString("PreferredCity", "");
+        String[] args = {sportSt, preferredCity};
+        Cursor myCursor = myDB.rawQuery("select phoneNumber from userBase where sport=? and city=?",
+                args);
+        while(myCursor.moveToNext()) {
+            String phoneNumber = myCursor.getString(0);
+            Log.d("numer:", phoneNumber);
+            smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
+            phoneNumbers = phoneNumbers + phoneNumber + ", ";
+        }
+        myCursor.close();
+
+        Toast.makeText(this, "SMS sent to: " + phoneNumbers + "all done.", Toast.LENGTH_SHORT).show();
     }
 
     public void btnLocation_click(View view) {
