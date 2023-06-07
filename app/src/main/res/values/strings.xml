@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Sportify</string>
     <string name="autor" />
+    <string name="dark_theme">Dark Theme</string>
 </resources>

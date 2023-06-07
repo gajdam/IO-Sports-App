@@ -1,6 +1,11 @@
 package com.example.finalproject;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.app.PendingIntent;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,11 +25,11 @@ public class CreateEventActivity extends AppCompatActivity{
     EditText hour;
     EditText sport;
     SmsManager smsManager = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
+
         smsManager = SmsManager.getDefault();
     }
 

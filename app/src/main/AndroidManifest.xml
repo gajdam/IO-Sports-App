@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:allowBackup="true"
@@ -13,9 +14,21 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileACTIVITY"
+            android:exported="false"
+            android:label="Profile"
+            android:parentActivityName=".SecondActivity"/>
+        <activity
+            android:name=".SecondActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:parentActivityName=".SecondActivity" />
+        <activity
             android:name=".CreateEventActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".SecondActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
