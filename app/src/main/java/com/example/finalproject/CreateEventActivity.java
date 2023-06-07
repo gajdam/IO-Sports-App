@@ -15,7 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class CreateEventActivity extends AppCompatActivity{
-
+    EditText location;
+    EditText date;
+    EditText hour;
+    EditText sport;
     SmsManager smsManager = null;
 
     @Override
@@ -26,10 +29,10 @@ public class CreateEventActivity extends AppCompatActivity{
     }
 
     public void btnSend_click(View v) {
-        EditText location = (EditText) v.findViewById(R.id.etLocation);
-        EditText  date = (EditText) v.findViewById(R.id.etDate);
-        EditText hour = (EditText) v.findViewById(R.id.etTime);
-        EditText sport = (EditText) v.findViewById(R.id.etSportName);
+        location = (EditText) findViewById(R.id.etLocation);
+        date = (EditText) findViewById(R.id.etDate);
+        hour = (EditText) findViewById(R.id.etTime);
+        sport = (EditText) findViewById(R.id.etSportName);
 
         String sportSt = sport.getText().toString();
         String dateSt = date.getText().toString();
