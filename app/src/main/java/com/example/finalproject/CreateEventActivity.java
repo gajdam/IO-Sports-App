@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class CreateEventActivity extends AppCompatActivity{
+
+    private DatabaseHelper databaseHelper;
     EditText location;
     EditText date;
     EditText hour;
@@ -32,44 +34,21 @@ public class CreateEventActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-
+        databaseHelper = new DatabaseHelper(this);
         smsManager = SmsManager.getDefault();
     }
 
-    public void btnSend_click(View v) {
-        location = (EditText) findViewById(R.id.etLocation);
-        date = (EditText) findViewById(R.id.etDate);
-        hour = (EditText) findViewById(R.id.etTime);
-        sport = (EditText) findViewById(R.id.etSportName);
+    private void sendSMS(String phoneNumber, String sport, String city, String date, String hour, String location) {
+        String message = "Hi, I want to invite you to play " + sport + " with me in " + city + " on that day: " + date + " at: " + hour + ". Let's meet up! " + location;
 
-        String sportSt = sport.getText().toString();
-        String dateSt = date.getText().toString();
-        String hourSt = hour.getText().toString();
-        String locationSt = location.getText().toString();
-
-        String number = "9876543210";
-        String message = "Hi, I want to invite you to play " + sportSt + " with me, on " + dateSt + " at " + hourSt + ". Meet me at: " + locationSt;
-        ArrayList<String> parts = smsManager.divideMessage(message);
-        String phoneNumbers = "";
-
-        SQLiteDatabase myDB = openOrCreateDatabase("my.db", MODE_PRIVATE, null);
-        myDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS userBase (phoneNumber VARCHAR(200), sport VARCHAR(200), city VARCHAR(200))"
-        );
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        String preferredCity = sharedPreferences.getString("PreferredCity", "");
-        String[] args = {sportSt, preferredCity};
-        Cursor myCursor = myDB.rawQuery("select phoneNumber from userBase where sport=? and city=?",
-                args);
-        while(myCursor.moveToNext()) {
-            String phoneNumber = myCursor.getString(0);
-            Log.d("numer:", phoneNumber);
-            smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
-            phoneNumbers = phoneNumbers + phoneNumber + ", ";
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+            Toast.makeText(this, "SMS sent to " + phoneNumber, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Failed to send SMS to " + phoneNumber, Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
-        myCursor.close();
-
-        Toast.makeText(this, "SMS sent to: " + phoneNumbers + "all done.", Toast.LENGTH_SHORT).show();
     }
 
     public void btnLocation_click(View view) {
@@ -84,5 +63,27 @@ public class CreateEventActivity extends AppCompatActivity{
     }
 
 
+    public void sendInvitations(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        String userCity = sharedPreferences.getString("PreferredCity", "");
+        Log.d("PreferredCity", userCity);
 
+        location = (EditText) findViewById(R.id.etLocation);
+        date = (EditText) findViewById(R.id.etDate);
+        hour = (EditText) findViewById(R.id.etTime);
+        sport = (EditText) findViewById(R.id.etSportName);
+
+        String sportSt = sport.getText().toString();
+        String dateSt = date.getText().toString();
+        String hourSt = hour.getText().toString();
+        String locationSt = location.getText().toString();
+
+        Cursor cursor = databaseHelper.getUsersBySportAndCity(sportSt, userCity);
+        int phoneNumberIndex = cursor.getColumnIndex("phoneNumber");
+        while (cursor.moveToNext()) {
+            String phoneNumber = cursor.getString(phoneNumberIndex);
+            sendSMS(phoneNumber, sportSt, userCity, dateSt, hourSt, locationSt);
+        }
+        cursor.close();
+    }
 }

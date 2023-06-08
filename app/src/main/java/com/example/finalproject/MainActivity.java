@@ -27,6 +27,7 @@ import androidx.core.app.ActivityCompat;
 
 
 public class MainActivity extends AppCompatActivity {
+    private DatabaseHelper databaseHelper;
     EditText username;
     EditText password;
     @Override
@@ -34,36 +35,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        databaseHelper = new DatabaseHelper(this);
+
+        databaseHelper.insertUser("9876543210", "Football", "New York");
+        databaseHelper.insertUser("1234567890", "Tennis", "Katowice");
+        databaseHelper.insertUser("123123123", "Tennis", "Katowice");
+
         ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.SEND_SMS}, 100);
         username=findViewById(R.id.txtNumber);
         password=findViewById(R.id.txtPass);
-        database();
     }
-
-    public void database(){
-        SQLiteDatabase myDB = openOrCreateDatabase("my.db", MODE_PRIVATE, null);
-        myDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS userBase (phoneNumber VARCHAR(200), sport VARCHAR(200), city VARCHAR(200))"
-);
-        ContentValues row1 = new ContentValues();
-        row1.put("phoneNumber", "0987654321");
-        row1.put("sport", "Tennis");
-        row1.put("city", "Katowice");
-        ContentValues row2 = new ContentValues();
-        row2.put("phoneNumber", "0987653421");
-        row2.put("sport", "Baseball");
-        row1.put("city", "Warszawa");
-        ContentValues row3 = new ContentValues();
-        row3.put("phoneNumber", "0978654321");
-        row3.put("sport", "Tennis");
-        row3.put("city", "Warszawa");
-        myDB.insert("userBase", null, row1);
-        myDB.insert("userBase", null, row2);
-        myDB.insert("userBase", null, row3);
-
-        myDB.close();
-    }
-
 
     public void onClick(View view) {
         String number = username.getText().toString();
